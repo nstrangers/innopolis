@@ -1,0 +1,104 @@
+
+    BODY {
+    font-family: Verdana, Arial, sans-serif;
+    }
+
+    #top {
+    background: #4969e1;
+    /* Цвет фона */
+    border: solid 1px black;
+    /* Параметры рамки */
+    padding: 15px 0 15px 10px;
+    /* Поля вокруг текста */
+    margin-bottom: 15px;
+    /* Расстояние между заголовком и колонками */
+    font-size: 24px;
+    /* Размер шрифта */
+    font-weight: bold;
+    /* Жирное начертание */
+    color: #FFFF00;
+    /* Цвет символов */
+    }
+
+    #task {
+    /* Навигация по сайту */
+    width: 48%;
+    /* Ширина меню */
+    background: #e3e8cc;
+    /* Цвет фона */
+    border: solid 1px black;
+    /* Параметры рамки */
+    float: left;
+    /* Состыковка с другим слоем по горизонтали */
+    padding: 3px;
+    /* Поля вокруг текста */
+    margin: 10px;
+    }
+
+    #task A {
+    /* Ссылки в меню */
+    font-size: 90%;
+    /* Размер текста */
+    }
+
+    #name {
+    background: #4969e1;
+    padding: 5px;
+    margin-bottom: 5px;
+    color: #FFFF00;
+    }
+
+    #content {
+    /* Основное содержание страницы */
+    background: #e3e8cc;
+    /* Цвет фона */
+    border: solid 1px black;
+    /* Параметры рамки */
+    margin-left: 48%;
+    /* Отступ слева */
+    margin-bottom: 15px
+    }
+
+    #bottom {
+    /* Нижняя часть */
+    background: #e3e8cc;
+    /* Цвет фона */
+    border: solid 1px black;
+    /* Параметры рамки */
+    font-size: 90%;
+    /* Размер шрифта */
+    padding: 3px;
+    /* Поля вокруг текста */
+    }
+
+    H1 {
+    /* Заголовок страницы */
+    text-align: center;
+    /* Выравнивание по центру */
+    font-size: 210%;
+    /* Размер шрифта */
+    font-family: "Times New Roman", Times, serif;
+    /* Шрифт с засечками */
+    font-weight: normal;
+    /* Нормальное начертание */
+    color: black;
+    /* Цвет текста */
+    padding: 0;
+    /* Убираем значение полей */
+    margin: 0;
+    /* Обнуляем значения отступов */
+    }
+
+    table {
+    width: 100%; /* Ширина таблицы в процентах */
+    border: 1px solid;
+    border-collapse: collapse;
+    }
+    td {
+    border: 1px solid;
+    background-color: #C9E4F6;
+    }
+
+    th {
+    background-color: #00BFFF;
+    }
