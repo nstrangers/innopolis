@@ -5,75 +5,44 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title>Планировщик</title>
-   <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"/>
-
+   <link rel="stylesheet" href="{% static 'css/style1.css' %}" type="text/css"/>
 </head>
 <body>
-<div id="top">Планировщик</div>
-<div style="width:100%; height:1px; clear:both;"></div>
-<div id="'block">
-    <div id="task">
-        <div id="name">Новые задачи</div>
-        <table>
-        <tbody>
-        <tr>
-            <th>ID задачи</th>
-            <th>Тема</th>
-            <th>Заказчик</th>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-        </tbody>
-        </table>
+    <div id="top">
+        <div class="top-left">Планировщик</div>
+        <div class="top-right">
+            Вы вошли как: {{ user }}
+        </div>
     </div>
-    <div id="task">
-        <div id="name">Не подтвержденные у заказчика</div>
-        <table>
-        <tbody>
-        <tr>
-            <th>ID задачи</th>
-            <th>Тема</th>
-            <th>Заказчик</th>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-        </tbody>
-        </table>
+    <div style="width:100%; height:1px; clear:both;"></div>
+    <div id="'block">
+        <div id="task">
+            <div id="name">Новые задачи</div>
+            <table>
+                <tbody>
 
+            <tr>
+                <th>ID задачи</th>
+                <th>Тема</th>
+                <th>Заказчик</th>
+            </tr>
+            {% for i in data %}
+                {% if i.status == '0' %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.title }}</td>
+                        <td>{{ i.author }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
 
-    </div>
-</div>
-<div style="width:100%; height:1px; clear:both;"></div>
-<div id="'block">
-    <div id="task">
-        <div id="name">Задачи в работе</div>
-        <table>
+                <tr><td>-</td><td>-</td><td>-</td></tr>
+            </tbody>
+            </table>
+        </div>
+        <div id="task">
+            <div id="name">Не подтвержденные у заказчика</div>
+            <table>
             <tbody>
             <tr>
                 <th>ID задачи</th>
@@ -91,43 +60,70 @@
                 <td>Mexico</td>
             </tr>
             </tbody>
-        </table>
-    </div>
-    <div id="task">
-        <div id="name">Требующие подтверждения</div>
-        <table>
-        <tbody>
-        <tr>
-            <th>ID задачи</th>
-            <th>Тема</th>
-            <th>Исполнитель</th>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-        </tbody>
-        </table>
-    </div>
-</div>
+            </table>
 
-<div style="width:100%; height:1px; clear:both;"></div>
+
+        </div>
+    </div>
+    <div style="width:100%; height:1px; clear:both;"></div>
+    <div id="'block">
+        <div id="task">
+            <div id="name">Задачи в работе</div>
+            <table>
+                <tbody>
+                <tr>
+                    <th>ID задачи</th>
+                    <th>Тема</th>
+                    <th>Заказчик</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisco Chang</td>
+                    <td>Mexico</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="task">
+            <div id="name">Требующие подтверждения</div>
+            <table>
+            <tbody>
+            <tr>
+                <th>ID задачи</th>
+                <th>Тема</th>
+                <th>Исполнитель</th>
+            </tr>
+            <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+            </tr>
+            <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="width:100%; height:1px; clear:both;"></div>
     <div id="'block">
         <div id="task">
             <div id="name">Выполненные</div>

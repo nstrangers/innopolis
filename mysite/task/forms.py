@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Task
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -7,6 +8,9 @@ class LoginForm(forms.Form):
 
 
 class NewTaskForm(forms.Form):
+    class Meta:
+        model = Task
+        fields = ('title', 'text',)
     CHOICES = [(x, x.first_name+' '+x.last_name) for x in User.objects.filter(groups__name='Исполнители')]
     title = forms.CharField(label='Название задачи')
     description = forms.CharField(widget=forms.Textarea, label='Описание задачи')
