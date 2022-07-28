@@ -9,9 +9,9 @@
 </head>
 <body>
     <div id="top">
-        <div class="top-left">Планировщик</div>
+        <div class="top-left"><a href="{% url 'main' %}">Планировщик</a></div>
         <div class="top-right">
-            Вы вошли как: {{ user }}
+            Вы вошли как: {{ user }} | <a href="{% url 'logout' %}">Выйти</a>
         </div>
     </div>
     <div style="width:100%; height:1px; clear:both;"></div>
@@ -30,7 +30,7 @@
                 {% if i.status == '0' %}
                     <tr>
                         <td>{{ i.id }}</td>
-                        <td>{{ i.title }}</td>
+                        <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
                         <td>{{ i.author }}</td>
                     </tr>
                 {% endif %}
@@ -41,7 +41,7 @@
             </table>
         </div>
         <div id="task">
-            <div id="name">Не подтвержденные у заказчика</div>
+            <div id="name">На подтверждении у заказчика</div>
             <table>
             <tbody>
             <tr>
@@ -49,16 +49,17 @@
                 <th>Тема</th>
                 <th>Заказчик</th>
             </tr>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
+            {% for i in data %}
+                {% if i.status == '2' %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
+                        <td>{{ i.author }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            <tr><td>-</td><td>-</td><td>-</td></tr>
             </tbody>
             </table>
 
@@ -76,16 +77,17 @@
                     <th>Тема</th>
                     <th>Заказчик</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
+                {% for i in data %}
+                    {% if i.status == '1' %}
+                        <tr>
+                            <td>{{ i.id }}</td>
+                            <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
+                            <td>{{ i.author }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+
+                <tr><td>-</td><td>-</td><td>-</td></tr>
                 </tbody>
             </table>
         </div>
@@ -173,5 +175,10 @@
             </table>
         </div>
     </div>
+    {% if tag_author == '1' %}
+    <form action="" method="post">
+        <p><input type="submit" name="create-task" value="Создать новую задачу"></p>
+    </form>
+    {% endif %}
 </body>
 </html>
