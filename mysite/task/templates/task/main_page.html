@@ -27,7 +27,7 @@
                 <th>Заказчик</th>
             </tr>
             {% for i in data %}
-                {% if i.status == '0' %}
+                {% if i.status == '0' and i.executor == user %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
@@ -41,29 +41,38 @@
             </table>
         </div>
         <div id="task">
-            <div id="name">На подтверждении у заказчика</div>
+            <div id="name">Мои задачи</div>
             <table>
             <tbody>
             <tr>
-                <th>ID задачи</th>
+             <th>ID задачи</th>
                 <th>Тема</th>
-                <th>Заказчик</th>
+                <th>Статус</th>
+                <th>Исполнитель</th>
             </tr>
             {% for i in data %}
-                {% if i.status == '2' %}
+                {% if i.author == user %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
-                        <td>{{ i.author }}</td>
+                        <td>
+                            {% if i.status == '0' %}
+                                Не взята в работу
+                            {% elif i.status == '1' %}
+                                В работе
+                            {% elif i.status == '2' %}
+                                На подтверждении
+                            {% else %}
+                                Выполнена
+                            {% endif %}
+                        </td>
+                        <td>{{ i.executor }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
-
-            <tr><td>-</td><td>-</td><td>-</td></tr>
+            <tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>
             </tbody>
             </table>
-
-
         </div>
     </div>
     <div style="width:100%; height:1px; clear:both;"></div>
@@ -78,7 +87,7 @@
                     <th>Заказчик</th>
                 </tr>
                 {% for i in data %}
-                    {% if i.status == '1' %}
+                    {% if i.status == '1' and i.executor == user %}
                         <tr>
                             <td>{{ i.id }}</td>
                             <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
@@ -100,31 +109,49 @@
                 <th>Тема</th>
                 <th>Исполнитель</th>
             </tr>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
+            {% for i in data %}
+                {% if i.author == user and i.status == '2' %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
+                        <td>{{ i.executor }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            <tr><td>-</td><td>-</td><td>-</td></tr>
             </tbody>
             </table>
         </div>
     </div>
 
+    <div style="width:100%; height:1px; clear:both;"></div>
+    <div id="'block">
+        <div id="task">
+            <div id="name">На подтверждении у заказчика</div>
+            <table>
+            <tbody>
+            <tr>
+                <th>ID задачи</th>
+                <th>Тема</th>
+                <th>Заказчик</th>
+            </tr>
+            {% for i in data %}
+                {% if i.status == '2' and i.executor == user %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
+                        <td>{{ i.author }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            <tr><td>-</td><td>-</td><td>-</td></tr>
+            </tbody>
+            </table>
+
+
+        </div>
+    </div>
     <div style="width:100%; height:1px; clear:both;"></div>
     <div id="'block">
         <div id="task">
@@ -136,45 +163,23 @@
                 <th>Тема</th>
                 <th>Заказчик</th>
             </tr>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-            </tr>
+            {% for i in data %}
+                {% if i.status == '3' and i.executor == user %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
+                        <td>{{ i.author }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            <tr><td>-</td><td>-</td><td>-</td></tr>
             </tbody>
             </table>
         </div>
-        <div id="task">
-            <div id="name">Мои задачи</div>
-            <table>
-            <tbody>
-            <tr>
-             <th>ID задачи</th>
-                <th>Тема</th>
-                <th>Статус</th>
-                <th>Исполнитель</th>
-            </tr>
-            <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
-            <tr>
-                <td>Centro comercial Moctezuma</td>
-                <td>Francisco Chang</td>
-                <td>Mexico</td>
-                <td>Maria Anders</td>
-            </tr>
-            </tbody>
-            </table>
-        </div>
+
     </div>
+
+    <div style="width:100%; height:1px; clear:both;"></div>
     {% if tag_author == '1' %}
     <form action="" method="post">
         <p><input type="submit" name="create-task" value="Создать новую задачу"></p>
