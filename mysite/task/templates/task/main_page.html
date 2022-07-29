@@ -11,7 +11,7 @@
     <div id="top">
         <div class="top-left"><a href="{% url 'main' %}">Планировщик</a></div>
         <div class="top-right">
-            Вы вошли как: {{ user }} | <a href="{% url 'logout' %}">Выйти</a>
+            Вы вошли как: {{ user.first_name }} {{user.last_name }} | <a href="{% url 'logout' %}">Выйти</a>
         </div>
     </div>
     <div style="width:100%; height:1px; clear:both;"></div>
@@ -27,11 +27,11 @@
                 <th>Заказчик</th>
             </tr>
             {% for i in data %}
-                {% if i.status == '0' and i.executor == user %}
+                {% if i.status == '0' and i.executor.username == user.username %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
-                        <td>{{ i.author }}</td>
+                        <td>{{ i.author.first_name }} {{ i.author.last_name }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -51,7 +51,7 @@
                 <th>Исполнитель</th>
             </tr>
             {% for i in data %}
-                {% if i.author == user %}
+                {% if i.author.username == user.username %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
@@ -66,7 +66,7 @@
                                 Выполнена
                             {% endif %}
                         </td>
-                        <td>{{ i.executor }}</td>
+                        <td>{{ i.executor.first_name }} {{ i.executor.last_name }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -87,11 +87,11 @@
                     <th>Заказчик</th>
                 </tr>
                 {% for i in data %}
-                    {% if i.status == '1' and i.executor == user %}
+                    {% if i.status == '1' and i.executor.username == user.username %}
                         <tr>
                             <td>{{ i.id }}</td>
                             <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
-                            <td>{{ i.author }}</td>
+                            <td>{{ i.author.first_name }} {{ i.author.last_name }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -110,11 +110,11 @@
                 <th>Исполнитель</th>
             </tr>
             {% for i in data %}
-                {% if i.author == user and i.status == '2' %}
+                {% if i.author.username == user.username and i.status == '2' %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
-                        <td>{{ i.executor }}</td>
+                        <td>{{ i.executor.first_name }} {{ i.executor.last_name }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -136,11 +136,11 @@
                 <th>Заказчик</th>
             </tr>
             {% for i in data %}
-                {% if i.status == '2' and i.executor == user %}
+                {% if i.status == '2' and i.executor.username == user.username %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
-                        <td>{{ i.author }}</td>
+                        <td>{{ i.author.first_name }} {{ i.author.last_name }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -164,11 +164,11 @@
                 <th>Заказчик</th>
             </tr>
             {% for i in data %}
-                {% if i.status == '3' and i.executor == user %}
+                {% if i.status == '3' and i.executor.username == user.username %}
                     <tr>
                         <td>{{ i.id }}</td>
                         <td><a href="{% url 'worktask' i.id %}">{{ i.title }}</a></td>
-                        <td>{{ i.author }}</td>
+                        <td>{{ i.author.first_name }} {{ i.author.last_name }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}

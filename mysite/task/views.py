@@ -6,20 +6,22 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import Task, Comments
 from django.core import serializers
-from .serializer import TaskSerializer, CommentsSerializer
+from .serializer import TaskSerializer, CommentsSerializer, UserSerializer
 import json
 
-def create_json():
-    initial_data = json.loads(serializers.serialize('json', Task.objects.all()))
-    result = []
-    for temp in initial_data:
-        task = temp['fields']
-        task['id'] = temp['pk']
-        task['author'] = User.objects.get(pk=task['author']).first_name + ' ' + User.objects.get(pk=task['author']).last_name
-        task['executor'] = User.objects.get(pk=task['executor']).first_name + ' ' + User.objects.get(pk=task['executor']).last_name
-        result.append(task)
-    print(result)
-    return result
+
+# def create_json():
+#     initial_data = json.loads(serializers.serialize('json', Task.objects.all()))
+#     result = []
+#     for temp in initial_data:
+#         task = temp['fields']
+#         task['id'] = temp['pk']
+#         task['author'] = User.objects.get(pk=task['author']).first_name + ' ' + User.objects.get(pk=task['author']).last_name
+#         task['executor'] = User.objects.get(pk=task['executor']).first_name + ' ' + User.objects.get(pk=task['executor']).last_name
+#         result.append(task)
+#     print('main page')
+#     print(result)
+#     return result
 
 @csrf_exempt
 def main_page(request):
@@ -28,9 +30,14 @@ def main_page(request):
     else:
         if request.user.is_anonymous == False:
             tag_author='1' if request.user in User.objects.filter(groups__name='Заказчики') else '0'
-            user = User.objects.get(username=request.user.username).first_name + ' ' + User.objects.get(username=request.user.username).last_name
-            print(request.headers)
-            return render(request, "task/main_page.html", {'user': user, 'data' : create_json(), 'tag_author': tag_author})
+            user = (UserSerializer(User.objects.get(username=request.user.username))).data
+            print('user')
+            print(user)
+            data = json.loads(json.dumps(TaskSerializer(Task.objects.all(), many=True).data))
+            print('data')
+            print(data)
+            #user = User.objects.get(username=request.user.username).first_name + ' ' + User.objects.get(username=request.user.username).last_name
+            return render(request, "task/main_page.html", {'user': user, 'data' : data, 'tag_author': tag_author})
         else:
             return redirect(user_login)
 
@@ -81,7 +88,7 @@ def edit_task(request, pk):
         edit_form = EditTaskForm(request.POST,instance=task)
         if edit_form.is_valid():
             edit_form.save()
-            return HttpResponse('Ok')
+            return redirect(main_page)
     if request.method == "GET":
         edit_form = EditTaskForm(instance=task)
     return render(request, 'task/new_task.html', {'form': edit_form})
@@ -91,18 +98,14 @@ def work_task(request, pk):
     task = Task.objects.get(pk=pk)
     if request.method == "GET":
         newcommentform = NewCommentForm
-        taskserializer = TaskSerializer(task)
-        data = taskserializer.data
-        data['user'] = request.user.username
-        data['username'] = User.objects.get(username=data['user']).first_name + ' ' + User.objects.get(
-            username=request.user.username).last_name
+        data = json.loads(json.dumps(TaskSerializer(task).data))
+        user = (UserSerializer(User.objects.get(username=request.user.username))).data
         data['form'] = newcommentform
         comments = Comments.objects.filter(task=task)
         commentserializer = CommentsSerializer(comments, many=True)
         data['comments']=json.loads(json.dumps(commentserializer.data))
-        print(data)
-
         return render(request, 'task/work_task.html', data)
+
     if request.method == "POST":
         if 'take-to-work' in request.POST: #нажали кнопку принять в работу
             task.status='1'

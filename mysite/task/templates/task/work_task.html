@@ -11,14 +11,14 @@
     <div id="top">
         <div class="top-left"><a href="{% url 'main' %}">Планировщик</a></div>
         <div class="top-right">
-            Вы вошли как: {{ username }} | <a href="{% url 'logout' %}">Выйти</a>
+            Вы вошли как: {{ user.first_name }} {{user.last_name }} | <a href="{% url 'logout' %}">Выйти</a>
         </div>
     </div>
     <div style="width:100%; height:1px; clear:both;"></div>
     <div id="'block">
         <div id="task">
             <div id="name">Задачa {{ id }}
-                {% if author == user %}
+                {% if author.username == user.username %}
                  - <a href="{% url 'edittask' id %}">Изменить</a>
                 {% endif %}
             </div>
@@ -40,7 +40,7 @@
                 </tr>
                 </tbody>
             </table>
-            {% if user == author %}
+            {% if user.username == author.username %}
                 {% if status == '2' %}
                     <form action="" method="post">
                     <p><input type="submit" name="task-confirm" value="Подтвердить выполнение"> <input type="submit" name="task-not-confirm" value="Вернуть в работу"></p>
@@ -57,7 +57,7 @@
 
 
 
-            {% if user == executor %}
+            {% if user.username == executor.username %}
                 {% if status == '0' %}
                     <form action="" method="post">
                     <p><input type="submit" name="take-to-work" value="Взять в работу"></p>
@@ -83,10 +83,10 @@
                 <th>Автор</th>
                 <th>Комментарий</th>
             </tr>
-            {% if user == author or user == executor %}
+            {% if user.username == author.username or user.username == executor.username %}
                 {% for comment in comments %}
             <tr>
-                <td>{{ comment.author }}</td>
+                <td>{{ comment.author.first_name }} {{ comment.author.last_name }}</td>
                 <td>{{ comment.comment }}</td>
             </tr>
             {% endfor %}
